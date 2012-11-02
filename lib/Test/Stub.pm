@@ -35,6 +35,8 @@ sub AUTOLOAD {
 
     # rebless
     bless $$self, $pkg;
+
+    return;
 }
 
 1;
@@ -85,6 +87,8 @@ C<$stuff->foo()> returns 'bar'.
 Tokuhiro Matsuno E<lt>tokuhirom AAJKLFJEF@ GMAIL COME<gt>
 
 =head1 SEE ALSO
+
+The interface was taken from L<Test::Double>.
 
 =head1 LICENSE
 
