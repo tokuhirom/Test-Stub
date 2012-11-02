@@ -58,3 +58,5 @@ Gosuke
 Miyashita
 mysqldiff
 mmm
+rebless
+EXPORTABLE
