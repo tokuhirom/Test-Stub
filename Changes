@@ -1,4 +1,8 @@
 Revision history for Perl extension Test::Stub
 
+0.02
+
+    - pod fix
+
 0.01    Fri Nov  2 14:39:09 2012
     - original version

@@ -2,7 +2,7 @@ package Test::Stub;
 use strict;
 use warnings;
 use 5.008001;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 use parent qw/Exporter/;
 
 our @EXPORT = qw/stub/;
