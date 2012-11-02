@@ -80,7 +80,7 @@ For example. After calling following code:
 
     stub($stuff)->foo('bar');
 
-C<$stuff->foo()> returns 'bar'.
+C<< $stuff->foo() >> returns 'bar'.
 
 =head1 AUTHOR
 
