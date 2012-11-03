@@ -1,5 +1,9 @@
 Revision history for Perl extension Test::Stub
 
+0.03
+
+    - added make_stub() function
+
 0.02
 
     - pod fix
