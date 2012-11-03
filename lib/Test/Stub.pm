@@ -5,23 +5,18 @@ use 5.008001;
 our $VERSION = '0.02';
 use parent qw/Exporter/;
 
-our @EXPORT = qw/stub/;
+our @EXPORT = qw/stub make_stub/;
 
 sub stub {
     bless \$_[0], 'Test::Stub::Driver';
 }
 
-package Test::Stub::Driver;
-
 my $id = 0;
-our $AUTOLOAD;
-sub DESTROY { }
-sub AUTOLOAD {
-    my $self = shift;
-
-    $AUTOLOAD =~ s/.*:://;
-    my $method = $AUTOLOAD;
+sub make_stub {
+    my $object = shift;
+    my $method = shift;
     my $stub = shift || sub {};
+
     my $func = ref($stub) eq 'CODE' ? $stub : sub { $stub };
 
     my $pkg = "Test::Stub::Anon" . $id++;
@@ -29,12 +24,26 @@ sub AUTOLOAD {
     # stubbing.
     {
         no strict 'refs';
-        unshift @{"$pkg\::ISA"}, ref $$self;
+        unshift @{"$pkg\::ISA"}, ref $$object;
         *{"$pkg\::$method"} = $func;
     }
 
     # rebless
-    bless $$self, $pkg;
+    bless $$object, $pkg;
+
+    return;
+}
+
+package Test::Stub::Driver;
+
+our $AUTOLOAD;
+sub DESTROY { }
+sub AUTOLOAD {
+    $AUTOLOAD =~ s/.*:://;
+    my $method = $AUTOLOAD;
+
+    my $self = shift;
+    Test::Stub::make_stub($self, $method, @_);
 
     return;
 }
@@ -52,8 +61,14 @@ Test::Stub - Stub! Stub! Stub!
 
     use Test::Stub;
 
+    # DSL style
     my $agent = LWP::UserAgent->new();
     stub($agent)->get(HTTP::Response->new(200, "OK"));
+    is($agent->get('http://www.aiseikai.or.jp/')->code, 200);
+
+    # simple style
+    my $agent = LWP::UserAgent->new();
+    make_stub($agent, 'get', HTTP::Response->new(200, "OK"));
     is($agent->get('http://www.aiseikai.or.jp/')->code, 200);
 
 =head1 DESCRIPTION
@@ -67,6 +82,10 @@ Test::Stub is a simple stubbing library for Perl5.
 =item stub($stuff) : Test::Stub::Driver
 
 Create a new instance of Test::Stub::Driver.
+
+=item make_stub($object, $method, $stub) : Undef
+
+Make monadic class from blessed($object) and add a $method with $stub.
 
 =back
 
