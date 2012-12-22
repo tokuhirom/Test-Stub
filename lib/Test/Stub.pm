@@ -35,6 +35,8 @@ sub make_stub {
 }
 
 package Test::Stub::Driver;
+use strict;
+use warnings;
 
 our $AUTOLOAD;
 sub DESTROY { }
