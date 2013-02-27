@@ -8,7 +8,7 @@ use Test::Stub qw(stub);
 {
   package Target;
 
-  sub new { bless \(shift) }
+  sub new { bless \(do { my $x = shift }) }
 
   sub something { 'an apple!' }
   sub somewhere { 'upstairs!' }

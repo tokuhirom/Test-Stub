@@ -11,7 +11,7 @@ use Test::Stub qw(stub);
   use strict;
   use warnings;
 
-  sub new { bless \(shift) }
+  sub new { bless \(do { my $x = shift })  }
 
   sub one { 'one' }
   sub yi1 { '一' }
