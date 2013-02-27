@@ -1,10 +1,7 @@
-#!/usr/bin/env perl
-
 use strict;
 use warnings;
 use utf8;
 
-use lib grep { -d } qw(../lib ./lib);
 use Test::More;
 use Test::Stub;
 

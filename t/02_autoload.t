@@ -1,10 +1,7 @@
-#!/usr/bin/env perl
-
 use strict;
 use warnings;
 use Test::More tests => 8;
 
-use lib grep { -d $_ } qw(../lib ./lib);
 use Test::Stub qw(stub);
 
 {
